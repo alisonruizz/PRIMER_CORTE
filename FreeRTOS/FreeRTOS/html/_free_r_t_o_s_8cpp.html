@@ -1,0 +1,796 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.13.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Proyecto_FreeRTOS: Referencia del archivo FreeRTOS.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="descarga.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Proyecto_FreeRTOS<span id="projectnumber">&#160;1.0</span>
+   </div>
+   <div id="projectbrief">Sistema basado en FreeRTOS para sensores con ESP32</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.13.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Clases</a> &#124;
+<a href="#define-members">defines</a> &#124;
+<a href="#func-members">Funciones</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo FreeRTOS.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
+<code>#include &lt;DHT.h&gt;</code><br />
+<code>#include &lt;Wire.h&gt;</code><br />
+<code>#include &quot;RTClib.h&quot;</code><br />
+<code>#include &quot;freertos/FreeRTOS.h&quot;</code><br />
+<code>#include &quot;freertos/task.h&quot;</code><br />
+<code>#include &quot;freertos/queue.h&quot;</code><br />
+<code>#include &quot;freertos/semphr.h&quot;</code><br />
+<code>#include &quot;freertos/timers.h&quot;</code><br />
+<code>#include &quot;esp_sleep.h&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Clases</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sensor_data.html">SensorData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estructura para almacenar datos de los sensores ambientales.  <a href="struct_sensor_data.html#details">Más...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_r_t_c_data.html">RTCData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estructura para almacenar datos de fecha y hora.  <a href="struct_r_t_c_data.html#details">Más...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:a757bb4e2bff6148de6ef3989b32a0126" id="r_a757bb4e2bff6148de6ef3989b32a0126"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a757bb4e2bff6148de6ef3989b32a0126">DHTPIN</a>&#160;&#160;&#160;4</td></tr>
+<tr class="memdesc:a757bb4e2bff6148de6ef3989b32a0126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pin de datos del sensor DHT11.  <br /></td></tr>
+<tr class="separator:a757bb4e2bff6148de6ef3989b32a0126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b9f8130aa86fd9296d46ad818e1d2da" id="r_a7b9f8130aa86fd9296d46ad818e1d2da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b9f8130aa86fd9296d46ad818e1d2da">LDRPIN</a>&#160;&#160;&#160;34</td></tr>
+<tr class="memdesc:a7b9f8130aa86fd9296d46ad818e1d2da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pin del sensor LDR (fotorresistencia)  <br /></td></tr>
+<tr class="separator:a7b9f8130aa86fd9296d46ad818e1d2da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4553be4db9860d940f81d7447173b2f" id="r_ab4553be4db9860d940f81d7447173b2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab4553be4db9860d940f81d7447173b2f">LED_PIN</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:ab4553be4db9860d940f81d7447173b2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pin del LED indicador.  <br /></td></tr>
+<tr class="separator:ab4553be4db9860d940f81d7447173b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c509dba12bba99883a5be9341b7a0c5" id="r_a2c509dba12bba99883a5be9341b7a0c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c509dba12bba99883a5be9341b7a0c5">DHTTYPE</a>&#160;&#160;&#160;DHT11</td></tr>
+<tr class="memdesc:a2c509dba12bba99883a5be9341b7a0c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tipo de sensor DHT (DHT11)  <br /></td></tr>
+<tr class="separator:a2c509dba12bba99883a5be9341b7a0c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af694f5c1eb3df8e53837bc98d8600119" id="r_af694f5c1eb3df8e53837bc98d8600119"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af694f5c1eb3df8e53837bc98d8600119">BUTTON_PIN_1</a>&#160;&#160;&#160;18</td></tr>
+<tr class="memdesc:af694f5c1eb3df8e53837bc98d8600119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primer botón para interrupción.  <br /></td></tr>
+<tr class="separator:af694f5c1eb3df8e53837bc98d8600119"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13a85dcc7446184ab12433939eb65c9a" id="r_a13a85dcc7446184ab12433939eb65c9a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13a85dcc7446184ab12433939eb65c9a">BUTTON_PIN_2</a>&#160;&#160;&#160;19</td></tr>
+<tr class="memdesc:a13a85dcc7446184ab12433939eb65c9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Segundo botón para interrupción.  <br /></td></tr>
+<tr class="separator:a13a85dcc7446184ab12433939eb65c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:ad7a1df263f6f823242a112ec11297434" id="r_ad7a1df263f6f823242a112ec11297434"><td class="memItemLeft" align="right" valign="top">DHT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7a1df263f6f823242a112ec11297434">dht</a> (<a class="el" href="#a757bb4e2bff6148de6ef3989b32a0126">DHTPIN</a>, <a class="el" href="#a2c509dba12bba99883a5be9341b7a0c5">DHTTYPE</a>)</td></tr>
+<tr class="memdesc:ad7a1df263f6f823242a112ec11297434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Objeto sensor DHT.  <br /></td></tr>
+<tr class="separator:ad7a1df263f6f823242a112ec11297434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c2532b4137b5e34da5934bd30848538" id="r_a5c2532b4137b5e34da5934bd30848538"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c2532b4137b5e34da5934bd30848538">tareaDHT</a> (void *pvParameters)</td></tr>
+<tr class="memdesc:a5c2532b4137b5e34da5934bd30848538"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea para lectura del sensor DHT11.  <br /></td></tr>
+<tr class="separator:a5c2532b4137b5e34da5934bd30848538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa12708dca00c5c1708c8219910c21e3f" id="r_aa12708dca00c5c1708c8219910c21e3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa12708dca00c5c1708c8219910c21e3f">tareaLDR</a> (void *pvParameters)</td></tr>
+<tr class="memdesc:aa12708dca00c5c1708c8219910c21e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea para lectura del sensor LDR.  <br /></td></tr>
+<tr class="separator:aa12708dca00c5c1708c8219910c21e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafb59fc00c6190f85aae3d6af399775d" id="r_aafb59fc00c6190f85aae3d6af399775d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aafb59fc00c6190f85aae3d6af399775d">tareaRTC</a> (void *pvParameters)</td></tr>
+<tr class="memdesc:aafb59fc00c6190f85aae3d6af399775d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea para lectura del RTC.  <br /></td></tr>
+<tr class="separator:aafb59fc00c6190f85aae3d6af399775d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f29f1cc6da17cf19cdf38757904efbf" id="r_a9f29f1cc6da17cf19cdf38757904efbf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f29f1cc6da17cf19cdf38757904efbf">tareaMostrar</a> (void *pvParameters)</td></tr>
+<tr class="memdesc:a9f29f1cc6da17cf19cdf38757904efbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea para mostrar datos y gestionar alarmas.  <br /></td></tr>
+<tr class="separator:a9f29f1cc6da17cf19cdf38757904efbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4b7f08d3cc28bbf0f98d3fed9dbd7d7" id="r_ab4b7f08d3cc28bbf0f98d3fed9dbd7d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab4b7f08d3cc28bbf0f98d3fed9dbd7d7">tareaAlarma</a> (void *pvParameters)</td></tr>
+<tr class="memdesc:ab4b7f08d3cc28bbf0f98d3fed9dbd7d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea para controlar el LED de alarma.  <br /></td></tr>
+<tr class="separator:ab4b7f08d3cc28bbf0f98d3fed9dbd7d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c9b29c23ff0d2bc8d533ddd9a015b19" id="r_a2c9b29c23ff0d2bc8d533ddd9a015b19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c9b29c23ff0d2bc8d533ddd9a015b19">tareaCrearTrama</a> (void *pvParameters)</td></tr>
+<tr class="memdesc:a2c9b29c23ff0d2bc8d533ddd9a015b19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea para crear tramas formateadas.  <br /></td></tr>
+<tr class="separator:a2c9b29c23ff0d2bc8d533ddd9a015b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6be0a690aac43589dcf19fde3cff114" id="r_af6be0a690aac43589dcf19fde3cff114"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af6be0a690aac43589dcf19fde3cff114">tareaMostrarTrama</a> (void *pvParameters)</td></tr>
+<tr class="memdesc:af6be0a690aac43589dcf19fde3cff114"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea para mostrar tramas formateadas.  <br /></td></tr>
+<tr class="separator:af6be0a690aac43589dcf19fde3cff114"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fcc599f808a2703497dd7bab1fd952e" id="r_a1fcc599f808a2703497dd7bab1fd952e"><td class="memItemLeft" align="right" valign="top">void IRAM_ATTR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fcc599f808a2703497dd7bab1fd952e">buttonISR</a> ()</td></tr>
+<tr class="memdesc:a1fcc599f808a2703497dd7bab1fd952e"><td class="mdescLeft">&#160;</td><td class="mdescRight">ISR para manejo de pulsadores.  <br /></td></tr>
+<tr class="separator:a1fcc599f808a2703497dd7bab1fd952e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93ba59a582c18d2cdcd403c913678294" id="r_a93ba59a582c18d2cdcd403c913678294"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a93ba59a582c18d2cdcd403c913678294">tareaMostrarContador</a> (void *pvParameters)</td></tr>
+<tr class="memdesc:a93ba59a582c18d2cdcd403c913678294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea para mostrar el contador de pulsaciones.  <br /></td></tr>
+<tr class="separator:a93ba59a582c18d2cdcd403c913678294"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0410ab13c851f5a242ec55ae6e9cf24" id="r_af0410ab13c851f5a242ec55ae6e9cf24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0410ab13c851f5a242ec55ae6e9cf24">enterDeepSleep</a> ()</td></tr>
+<tr class="memdesc:af0410ab13c851f5a242ec55ae6e9cf24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configura y activa el modo Deep Sleep.  <br /></td></tr>
+<tr class="separator:af0410ab13c851f5a242ec55ae6e9cf24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc01d736fe50cf5b977f755b675f11d" id="r_a4fc01d736fe50cf5b977f755b675f11d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
+<tr class="memdesc:a4fc01d736fe50cf5b977f755b675f11d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función de configuración inicial.  <br /></td></tr>
+<tr class="separator:a4fc01d736fe50cf5b977f755b675f11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe461d27b9c48d5921c00d521181f12f" id="r_afe461d27b9c48d5921c00d521181f12f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe461d27b9c48d5921c00d521181f12f">loop</a> ()</td></tr>
+<tr class="memdesc:afe461d27b9c48d5921c00d521181f12f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función loop principal (no utilizada en FreeRTOS)  <br /></td></tr>
+<tr class="separator:afe461d27b9c48d5921c00d521181f12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:afa042f998806fcdedab1794cebbeaad3" id="r_afa042f998806fcdedab1794cebbeaad3"><td class="memItemLeft" align="right" valign="top">RTC_DS3231&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa042f998806fcdedab1794cebbeaad3">rtc</a></td></tr>
+<tr class="memdesc:afa042f998806fcdedab1794cebbeaad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Objeto RTC DS3231.  <br /></td></tr>
+<tr class="separator:afa042f998806fcdedab1794cebbeaad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6b1fae2430dc808236d5f86df609c56" id="r_ac6b1fae2430dc808236d5f86df609c56"><td class="memItemLeft" align="right" valign="top">QueueHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6b1fae2430dc808236d5f86df609c56">sensorQueue</a></td></tr>
+<tr class="memdesc:ac6b1fae2430dc808236d5f86df609c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cola para datos de sensores (temperatura, humedad, luz)  <br /></td></tr>
+<tr class="separator:ac6b1fae2430dc808236d5f86df609c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32668467519cd6998f0d991817258ec6" id="r_a32668467519cd6998f0d991817258ec6"><td class="memItemLeft" align="right" valign="top">QueueHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32668467519cd6998f0d991817258ec6">rtcQueue</a></td></tr>
+<tr class="memdesc:a32668467519cd6998f0d991817258ec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cola para datos del RTC (fecha y hora)  <br /></td></tr>
+<tr class="separator:a32668467519cd6998f0d991817258ec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9763f9a83417aa4f04e9cb04501c2dd2" id="r_a9763f9a83417aa4f04e9cb04501c2dd2"><td class="memItemLeft" align="right" valign="top">QueueHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9763f9a83417aa4f04e9cb04501c2dd2">tramaQueue</a></td></tr>
+<tr class="memdesc:a9763f9a83417aa4f04e9cb04501c2dd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cola para tramas formateadas completas.  <br /></td></tr>
+<tr class="separator:a9763f9a83417aa4f04e9cb04501c2dd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a075c5fc481fb07bde19169deab4ca162" id="r_a075c5fc481fb07bde19169deab4ca162"><td class="memItemLeft" align="right" valign="top">SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a075c5fc481fb07bde19169deab4ca162">ledSemaphore</a></td></tr>
+<tr class="memdesc:a075c5fc481fb07bde19169deab4ca162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Semáforo binario para controlar el LED de alarma.  <br /></td></tr>
+<tr class="separator:a075c5fc481fb07bde19169deab4ca162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bc40e5f900d73bdc3f480304ec6bb32" id="r_a3bc40e5f900d73bdc3f480304ec6bb32"><td class="memItemLeft" align="right" valign="top">RTC_DATA_ATTR int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3bc40e5f900d73bdc3f480304ec6bb32">contador</a> = 0</td></tr>
+<tr class="memdesc:a3bc40e5f900d73bdc3f480304ec6bb32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contador de pulsaciones persistente.  <br /></td></tr>
+<tr class="separator:a3bc40e5f900d73bdc3f480304ec6bb32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f9748e80341ec343d855134bbf2f6bb" id="r_a4f9748e80341ec343d855134bbf2f6bb"><td class="memItemLeft" align="right" valign="top">RTC_DATA_ATTR int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4f9748e80341ec343d855134bbf2f6bb">wakeCounter</a> = 0</td></tr>
+<tr class="memdesc:a4f9748e80341ec343d855134bbf2f6bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contador de reinicios persistente.  <br /></td></tr>
+<tr class="separator:a4f9748e80341ec343d855134bbf2f6bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentación de «define»</h2>
+<a id="af694f5c1eb3df8e53837bc98d8600119" name="af694f5c1eb3df8e53837bc98d8600119"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af694f5c1eb3df8e53837bc98d8600119">&#9670;&#160;</a></span>BUTTON_PIN_1</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BUTTON_PIN_1&#160;&#160;&#160;18</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Primer botón para interrupción. </p>
+
+</div>
+</div>
+<a id="a13a85dcc7446184ab12433939eb65c9a" name="a13a85dcc7446184ab12433939eb65c9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13a85dcc7446184ab12433939eb65c9a">&#9670;&#160;</a></span>BUTTON_PIN_2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BUTTON_PIN_2&#160;&#160;&#160;19</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Segundo botón para interrupción. </p>
+
+</div>
+</div>
+<a id="a757bb4e2bff6148de6ef3989b32a0126" name="a757bb4e2bff6148de6ef3989b32a0126"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a757bb4e2bff6148de6ef3989b32a0126">&#9670;&#160;</a></span>DHTPIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DHTPIN&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pin de datos del sensor DHT11. </p>
+
+</div>
+</div>
+<a id="a2c509dba12bba99883a5be9341b7a0c5" name="a2c509dba12bba99883a5be9341b7a0c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c509dba12bba99883a5be9341b7a0c5">&#9670;&#160;</a></span>DHTTYPE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DHTTYPE&#160;&#160;&#160;DHT11</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tipo de sensor DHT (DHT11) </p>
+
+</div>
+</div>
+<a id="a7b9f8130aa86fd9296d46ad818e1d2da" name="a7b9f8130aa86fd9296d46ad818e1d2da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b9f8130aa86fd9296d46ad818e1d2da">&#9670;&#160;</a></span>LDRPIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LDRPIN&#160;&#160;&#160;34</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pin del sensor LDR (fotorresistencia) </p>
+
+</div>
+</div>
+<a id="ab4553be4db9860d940f81d7447173b2f" name="ab4553be4db9860d940f81d7447173b2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4553be4db9860d940f81d7447173b2f">&#9670;&#160;</a></span>LED_PIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LED_PIN&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pin del LED indicador. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones</h2>
+<a id="a1fcc599f808a2703497dd7bab1fd952e" name="a1fcc599f808a2703497dd7bab1fd952e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fcc599f808a2703497dd7bab1fd952e">&#9670;&#160;</a></span>buttonISR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void IRAM_ATTR buttonISR </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ISR para manejo de pulsadores. </p>
+<p>Esta ISR:</p><ol type="1">
+<li>Se ejecuta cuando hay flanco de bajada en los botones, usando configuración de resistencia pull-up</li>
+<li>Incrementa el contador global si se presiona cualquiera</li>
+</ol>
+<p>Características:</p><ul>
+<li>No usa colas ni semáforos directamente </li>
+</ul>
+
+</div>
+</div>
+<a id="ad7a1df263f6f823242a112ec11297434" name="ad7a1df263f6f823242a112ec11297434"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7a1df263f6f823242a112ec11297434">&#9670;&#160;</a></span>dht()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">DHT dht </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a757bb4e2bff6148de6ef3989b32a0126">DHTPIN</a></td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a2c509dba12bba99883a5be9341b7a0c5">DHTTYPE</a></td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Objeto sensor DHT. </p>
+
+</div>
+</div>
+<a id="af0410ab13c851f5a242ec55ae6e9cf24" name="af0410ab13c851f5a242ec55ae6e9cf24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0410ab13c851f5a242ec55ae6e9cf24">&#9670;&#160;</a></span>enterDeepSleep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void enterDeepSleep </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configura y activa el modo Deep Sleep. </p>
+<p>Esta función:</p><ol type="1">
+<li>Configura fuente de wakeup:<ul>
+<li>timer: Después de 30 segundos</li>
+</ul>
+</li>
+<li>Inicia el modo Deep Sleep</li>
+</ol>
+<p>Nota:</p><ul>
+<li>Las variables marcadas con RTC_DATA_ATTR se preservan</li>
+<li>El consumo de energía se reduce </li>
+</ul>
+
+</div>
+</div>
+<a id="afe461d27b9c48d5921c00d521181f12f" name="afe461d27b9c48d5921c00d521181f12f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe461d27b9c48d5921c00d521181f12f">&#9670;&#160;</a></span>loop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void loop </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Función loop principal (no utilizada en FreeRTOS) </p>
+<p>En sistemas con FreeRTOS, el loop principal no se usa. Las tareas se manejan por el scheduler o planificador. </p>
+
+</div>
+</div>
+<a id="a4fc01d736fe50cf5b977f755b675f11d" name="a4fc01d736fe50cf5b977f755b675f11d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fc01d736fe50cf5b977f755b675f11d">&#9670;&#160;</a></span>setup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setup </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Función de configuración inicial. </p>
+<p>Esta función:</p><ol type="1">
+<li>Inicializa periféricos (Serial, DHT, I2C, RTC)</li>
+<li>Configura pines (LED, botones)</li>
+<li>Configura interrupciones para los botones</li>
+<li>Crea colas y semáforos</li>
+<li>Crea todas las tareas de FreeRTOS</li>
+<li>Inicia el contador de reinicios </li>
+</ol>
+
+</div>
+</div>
+<a id="ab4b7f08d3cc28bbf0f98d3fed9dbd7d7" name="ab4b7f08d3cc28bbf0f98d3fed9dbd7d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4b7f08d3cc28bbf0f98d3fed9dbd7d7">&#9670;&#160;</a></span>tareaAlarma()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tareaAlarma </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>pvParameters</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea para controlar el LED de alarma. </p>
+<p>Esta tarea:</p><ol type="1">
+<li>Espera indefinidamente al semáforo ledSemaphore</li>
+<li>Cuando lo recibe:<ul>
+<li>Enciende el LED por 500ms</li>
+<li>Lo apaga</li>
+</ul>
+</li>
+</ol>
+<p>Comunicación:</p><ul>
+<li>Consumidor del semáforo ledSemaphore(se usa un semanforo binario libre-ocupado)</li>
+<li>No produce datos para otras tareas</li>
+</ul>
+<p>Sincronización:</p><ul>
+<li>Se bloquea hasta que tareaMostrar libera el semáforo</li>
+<li>Prioridad más alta para respuesta rápida </li>
+</ul>
+
+</div>
+</div>
+<a id="a2c9b29c23ff0d2bc8d533ddd9a015b19" name="a2c9b29c23ff0d2bc8d533ddd9a015b19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c9b29c23ff0d2bc8d533ddd9a015b19">&#9670;&#160;</a></span>tareaCrearTrama()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tareaCrearTrama </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>pvParameters</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea para crear tramas formateadas. </p>
+<p>Esta tarea:</p><ol type="1">
+<li>Mantiene últimos valores válidos de temperatura/humedad</li>
+<li>Recibe datos de sensores</li>
+<li>Recibe datos del RTC</li>
+<li>Cuando tiene todos los datos, crea una trama: "DD/MM/AAAA HH:MM:SS, Temp: X.XX C, Hum: XX.XX%, Luz: XXXX"</li>
+<li>Envía la trama a tramaQueue</li>
+</ol>
+<p>Comunicación:</p><ul>
+<li>Consumidor de sensorQueue y rtcQueue</li>
+<li>Productor de tramaQueue </li>
+</ul>
+
+</div>
+</div>
+<a id="a5c2532b4137b5e34da5934bd30848538" name="a5c2532b4137b5e34da5934bd30848538"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c2532b4137b5e34da5934bd30848538">&#9670;&#160;</a></span>tareaDHT()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tareaDHT </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>pvParameters</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea para lectura del sensor DHT11. </p>
+<p>Esta tarea se ejecuta cada 2 segundos y:</p><ol type="1">
+<li>Lee temperatura y humedad del sensor DHT11</li>
+<li>Verifica que las lecturas sean válidas</li>
+<li>Crea una estructura <a class="el" href="struct_sensor_data.html" title="Estructura para almacenar datos de los sensores ambientales.">SensorData</a> con los valores leídos</li>
+<li>Envía los datos a sensorQueue (cola de 10 elementos)</li>
+</ol>
+<p>Comunicación:</p><ul>
+<li>Productor de la cola sensorQueue (envía datos)</li>
+<li>No consume de ninguna cola </li>
+</ul>
+
+</div>
+</div>
+<a id="aa12708dca00c5c1708c8219910c21e3f" name="aa12708dca00c5c1708c8219910c21e3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa12708dca00c5c1708c8219910c21e3f">&#9670;&#160;</a></span>tareaLDR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tareaLDR </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>pvParameters</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea para lectura del sensor LDR. </p>
+<p>Esta tarea se ejecuta cada segundo y:</p><ol type="1">
+<li>Lee el valor analógico del LDR</li>
+<li>Crea una estructura <a class="el" href="struct_sensor_data.html" title="Estructura para almacenar datos de los sensores ambientales.">SensorData</a> con el valor de luz</li>
+<li>Envía los datos a sensorQueue</li>
+</ol>
+<p>Comunicación:</p><ul>
+<li>Productor de la cola sensorQueue (envía datos)</li>
+<li>No consume de ninguna cola </li>
+</ul>
+
+</div>
+</div>
+<a id="a9f29f1cc6da17cf19cdf38757904efbf" name="a9f29f1cc6da17cf19cdf38757904efbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f29f1cc6da17cf19cdf38757904efbf">&#9670;&#160;</a></span>tareaMostrar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tareaMostrar </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>pvParameters</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea para mostrar datos y gestionar alarmas. </p>
+<p>Esta tarea:</p><ol type="1">
+<li>Recibe datos de sensorQueue<ul>
+<li>Muestra temperatura/humedad o luz por serial</li>
+<li>Activa semáforo si supera umbrales (temp&gt;24 y hum&gt;70 o luz&gt;500)</li>
+</ul>
+</li>
+<li>Recibe datos de rtcQueue<ul>
+<li>Muestra fecha y hora formateada por serial</li>
+</ul>
+</li>
+</ol>
+<p>Comunicación:</p><ul>
+<li>Consumidor de sensorQueue y rtcQueue (recibe datos)</li>
+<li>Productor del semáforo ledSemaphore (para activar alarma)</li>
+</ul>
+<p>Sincronización:</p><ul>
+<li>Usa semáforo para indicar condición de alarma a tareaAlarma </li>
+</ul>
+
+</div>
+</div>
+<a id="a93ba59a582c18d2cdcd403c913678294" name="a93ba59a582c18d2cdcd403c913678294"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93ba59a582c18d2cdcd403c913678294">&#9670;&#160;</a></span>tareaMostrarContador()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tareaMostrarContador </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>pvParameters</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea para mostrar el contador de pulsaciones. </p>
+<p>Esta tarea:</p><ol type="1">
+<li>Muestra el valor del contador por serial cada segundo</li>
+<li>Usa variable contador marcada como RTC_DATA_ATTR</li>
+</ol>
+<p>Comunicación:</p><ul>
+<li>Accede a variable global compartida (contador)</li>
+<li>No usa colas ni semáforos </li>
+</ul>
+
+</div>
+</div>
+<a id="af6be0a690aac43589dcf19fde3cff114" name="af6be0a690aac43589dcf19fde3cff114"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6be0a690aac43589dcf19fde3cff114">&#9670;&#160;</a></span>tareaMostrarTrama()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tareaMostrarTrama </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>pvParameters</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea para mostrar tramas formateadas. </p>
+<p>Esta tarea:</p><ol type="1">
+<li>Espera tramas de tramaQueue</li>
+<li>Las muestra por el puerto serial</li>
+<li>Se ejecuta cada 5 segundos</li>
+</ol>
+<p>Comunicación:</p><ul>
+<li>Consumidor de tramaQueue</li>
+<li>No produce datos para otras tareas </li>
+</ul>
+
+</div>
+</div>
+<a id="aafb59fc00c6190f85aae3d6af399775d" name="aafb59fc00c6190f85aae3d6af399775d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafb59fc00c6190f85aae3d6af399775d">&#9670;&#160;</a></span>tareaRTC()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tareaRTC </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>pvParameters</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tarea para lectura del RTC. </p>
+<p>Esta tarea se ejecuta cada segundo y:</p><ol type="1">
+<li>Obtiene la fecha y hora actual del compilador</li>
+<li>Crea una estructura <a class="el" href="struct_r_t_c_data.html" title="Estructura para almacenar datos de fecha y hora.">RTCData</a> con los valores</li>
+<li>Envía los datos a rtcQueue (cola de 5 elementos)</li>
+</ol>
+<p>Comunicación:</p><ul>
+<li>Productor de la cola rtcQueue (envía datos)</li>
+<li>No consume de ninguna cola </li>
+</ul>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de variables</h2>
+<a id="a3bc40e5f900d73bdc3f480304ec6bb32" name="a3bc40e5f900d73bdc3f480304ec6bb32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bc40e5f900d73bdc3f480304ec6bb32">&#9670;&#160;</a></span>contador</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RTC_DATA_ATTR int contador = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Contador de pulsaciones persistente. </p>
+
+</div>
+</div>
+<a id="a075c5fc481fb07bde19169deab4ca162" name="a075c5fc481fb07bde19169deab4ca162"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a075c5fc481fb07bde19169deab4ca162">&#9670;&#160;</a></span>ledSemaphore</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SemaphoreHandle_t ledSemaphore</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Semáforo binario para controlar el LED de alarma. </p>
+
+</div>
+</div>
+<a id="afa042f998806fcdedab1794cebbeaad3" name="afa042f998806fcdedab1794cebbeaad3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa042f998806fcdedab1794cebbeaad3">&#9670;&#160;</a></span>rtc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RTC_DS3231 rtc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Objeto RTC DS3231. </p>
+
+</div>
+</div>
+<a id="a32668467519cd6998f0d991817258ec6" name="a32668467519cd6998f0d991817258ec6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32668467519cd6998f0d991817258ec6">&#9670;&#160;</a></span>rtcQueue</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QueueHandle_t rtcQueue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cola para datos del RTC (fecha y hora) </p>
+
+</div>
+</div>
+<a id="ac6b1fae2430dc808236d5f86df609c56" name="ac6b1fae2430dc808236d5f86df609c56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6b1fae2430dc808236d5f86df609c56">&#9670;&#160;</a></span>sensorQueue</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QueueHandle_t sensorQueue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cola para datos de sensores (temperatura, humedad, luz) </p>
+
+</div>
+</div>
+<a id="a9763f9a83417aa4f04e9cb04501c2dd2" name="a9763f9a83417aa4f04e9cb04501c2dd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9763f9a83417aa4f04e9cb04501c2dd2">&#9670;&#160;</a></span>tramaQueue</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QueueHandle_t tramaQueue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Cola para tramas formateadas completas. </p>
+
+</div>
+</div>
+<a id="a4f9748e80341ec343d855134bbf2f6bb" name="a4f9748e80341ec343d855134bbf2f6bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f9748e80341ec343d855134bbf2f6bb">&#9670;&#160;</a></span>wakeCounter</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">RTC_DATA_ATTR int wakeCounter = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Contador de reinicios persistente. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>

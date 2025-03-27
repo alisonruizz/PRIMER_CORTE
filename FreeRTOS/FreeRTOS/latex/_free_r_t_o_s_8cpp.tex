@@ -1,0 +1,489 @@
+\doxysection{Referencia del archivo Free\+RTOS.\+cpp}
+\hypertarget{_free_r_t_o_s_8cpp}{}\label{_free_r_t_o_s_8cpp}\index{FreeRTOS.cpp@{FreeRTOS.cpp}}
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \#include $<$DHT.\+h$>$}\newline
+{\ttfamily \#include $<$Wire.\+h$>$}\newline
+{\ttfamily \#include "{}RTClib.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/\+Free\+RTOS.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/task.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/queue.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/semphr.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/timers.\+h"{}}\newline
+{\ttfamily \#include "{}esp\+\_\+sleep.\+h"{}}\newline
+\doxysubsubsection*{Clases}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_sensor_data}{Sensor\+Data}}
+\begin{DoxyCompactList}\small\item\em Estructura para almacenar datos de los sensores ambientales. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_r_t_c_data}{RTCData}}
+\begin{DoxyCompactList}\small\item\em Estructura para almacenar datos de fecha y hora. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_free_r_t_o_s_8cpp_a757bb4e2bff6148de6ef3989b32a0126}{DHTPIN}}~4
+\begin{DoxyCompactList}\small\item\em Pin de datos del sensor DHT11. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_free_r_t_o_s_8cpp_a7b9f8130aa86fd9296d46ad818e1d2da}{LDRPIN}}~34
+\begin{DoxyCompactList}\small\item\em Pin del sensor LDR (fotorresistencia) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_free_r_t_o_s_8cpp_ab4553be4db9860d940f81d7447173b2f}{LED\+\_\+\+PIN}}~5
+\begin{DoxyCompactList}\small\item\em Pin del LED indicador. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_free_r_t_o_s_8cpp_a2c509dba12bba99883a5be9341b7a0c5}{DHTTYPE}}~DHT11
+\begin{DoxyCompactList}\small\item\em Tipo de sensor DHT (DHT11) \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_free_r_t_o_s_8cpp_af694f5c1eb3df8e53837bc98d8600119}{BUTTON\+\_\+\+PIN\+\_\+1}}~18
+\begin{DoxyCompactList}\small\item\em Primer botón para interrupción. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_free_r_t_o_s_8cpp_a13a85dcc7446184ab12433939eb65c9a}{BUTTON\+\_\+\+PIN\+\_\+2}}~19
+\begin{DoxyCompactList}\small\item\em Segundo botón para interrupción. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+DHT \mbox{\hyperlink{_free_r_t_o_s_8cpp_ad7a1df263f6f823242a112ec11297434}{dht}} (\mbox{\hyperlink{_free_r_t_o_s_8cpp_a757bb4e2bff6148de6ef3989b32a0126}{DHTPIN}}, \mbox{\hyperlink{_free_r_t_o_s_8cpp_a2c509dba12bba99883a5be9341b7a0c5}{DHTTYPE}})
+\begin{DoxyCompactList}\small\item\em Objeto sensor DHT. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_a5c2532b4137b5e34da5934bd30848538}{tarea\+DHT}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea para lectura del sensor DHT11. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_aa12708dca00c5c1708c8219910c21e3f}{tarea\+LDR}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea para lectura del sensor LDR. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_aafb59fc00c6190f85aae3d6af399775d}{tarea\+RTC}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea para lectura del RTC. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_a9f29f1cc6da17cf19cdf38757904efbf}{tarea\+Mostrar}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea para mostrar datos y gestionar alarmas. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_ab4b7f08d3cc28bbf0f98d3fed9dbd7d7}{tarea\+Alarma}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea para controlar el LED de alarma. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_a2c9b29c23ff0d2bc8d533ddd9a015b19}{tarea\+Crear\+Trama}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea para crear tramas formateadas. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_af6be0a690aac43589dcf19fde3cff114}{tarea\+Mostrar\+Trama}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea para mostrar tramas formateadas. \end{DoxyCompactList}\item 
+void IRAM\+\_\+\+ATTR \mbox{\hyperlink{_free_r_t_o_s_8cpp_a1fcc599f808a2703497dd7bab1fd952e}{button\+ISR}} ()
+\begin{DoxyCompactList}\small\item\em ISR para manejo de pulsadores. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_a93ba59a582c18d2cdcd403c913678294}{tarea\+Mostrar\+Contador}} (void \texorpdfstring{$\ast$}{*}pv\+Parameters)
+\begin{DoxyCompactList}\small\item\em Tarea para mostrar el contador de pulsaciones. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_af0410ab13c851f5a242ec55ae6e9cf24}{enter\+Deep\+Sleep}} ()
+\begin{DoxyCompactList}\small\item\em Configura y activa el modo Deep Sleep. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Función de configuración inicial. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_free_r_t_o_s_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Función loop principal (no utilizada en Free\+RTOS) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+RTC\+\_\+\+DS3231 \mbox{\hyperlink{_free_r_t_o_s_8cpp_afa042f998806fcdedab1794cebbeaad3}{rtc}}
+\begin{DoxyCompactList}\small\item\em Objeto RTC DS3231. \end{DoxyCompactList}\item 
+Queue\+Handle\+\_\+t \mbox{\hyperlink{_free_r_t_o_s_8cpp_ac6b1fae2430dc808236d5f86df609c56}{sensor\+Queue}}
+\begin{DoxyCompactList}\small\item\em Cola para datos de sensores (temperatura, humedad, luz) \end{DoxyCompactList}\item 
+Queue\+Handle\+\_\+t \mbox{\hyperlink{_free_r_t_o_s_8cpp_a32668467519cd6998f0d991817258ec6}{rtc\+Queue}}
+\begin{DoxyCompactList}\small\item\em Cola para datos del RTC (fecha y hora) \end{DoxyCompactList}\item 
+Queue\+Handle\+\_\+t \mbox{\hyperlink{_free_r_t_o_s_8cpp_a9763f9a83417aa4f04e9cb04501c2dd2}{trama\+Queue}}
+\begin{DoxyCompactList}\small\item\em Cola para tramas formateadas completas. \end{DoxyCompactList}\item 
+Semaphore\+Handle\+\_\+t \mbox{\hyperlink{_free_r_t_o_s_8cpp_a075c5fc481fb07bde19169deab4ca162}{led\+Semaphore}}
+\begin{DoxyCompactList}\small\item\em Semáforo binario para controlar el LED de alarma. \end{DoxyCompactList}\item 
+RTC\+\_\+\+DATA\+\_\+\+ATTR int \mbox{\hyperlink{_free_r_t_o_s_8cpp_a3bc40e5f900d73bdc3f480304ec6bb32}{contador}} = 0
+\begin{DoxyCompactList}\small\item\em Contador de pulsaciones persistente. \end{DoxyCompactList}\item 
+RTC\+\_\+\+DATA\+\_\+\+ATTR int \mbox{\hyperlink{_free_r_t_o_s_8cpp_a4f9748e80341ec343d855134bbf2f6bb}{wake\+Counter}} = 0
+\begin{DoxyCompactList}\small\item\em Contador de reinicios persistente. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentación de «define»}
+\Hypertarget{_free_r_t_o_s_8cpp_af694f5c1eb3df8e53837bc98d8600119}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!BUTTON\_PIN\_1@{BUTTON\_PIN\_1}}
+\index{BUTTON\_PIN\_1@{BUTTON\_PIN\_1}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{BUTTON\_PIN\_1}{BUTTON\_PIN\_1}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_af694f5c1eb3df8e53837bc98d8600119} 
+\#define BUTTON\+\_\+\+PIN\+\_\+1~18}
+
+
+
+Primer botón para interrupción. 
+
+\Hypertarget{_free_r_t_o_s_8cpp_a13a85dcc7446184ab12433939eb65c9a}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!BUTTON\_PIN\_2@{BUTTON\_PIN\_2}}
+\index{BUTTON\_PIN\_2@{BUTTON\_PIN\_2}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{BUTTON\_PIN\_2}{BUTTON\_PIN\_2}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a13a85dcc7446184ab12433939eb65c9a} 
+\#define BUTTON\+\_\+\+PIN\+\_\+2~19}
+
+
+
+Segundo botón para interrupción. 
+
+\Hypertarget{_free_r_t_o_s_8cpp_a757bb4e2bff6148de6ef3989b32a0126}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!DHTPIN@{DHTPIN}}
+\index{DHTPIN@{DHTPIN}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{DHTPIN}{DHTPIN}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a757bb4e2bff6148de6ef3989b32a0126} 
+\#define DHTPIN~4}
+
+
+
+Pin de datos del sensor DHT11. 
+
+\Hypertarget{_free_r_t_o_s_8cpp_a2c509dba12bba99883a5be9341b7a0c5}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!DHTTYPE@{DHTTYPE}}
+\index{DHTTYPE@{DHTTYPE}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{DHTTYPE}{DHTTYPE}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a2c509dba12bba99883a5be9341b7a0c5} 
+\#define DHTTYPE~DHT11}
+
+
+
+Tipo de sensor DHT (DHT11) 
+
+\Hypertarget{_free_r_t_o_s_8cpp_a7b9f8130aa86fd9296d46ad818e1d2da}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!LDRPIN@{LDRPIN}}
+\index{LDRPIN@{LDRPIN}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{LDRPIN}{LDRPIN}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a7b9f8130aa86fd9296d46ad818e1d2da} 
+\#define LDRPIN~34}
+
+
+
+Pin del sensor LDR (fotorresistencia) 
+
+\Hypertarget{_free_r_t_o_s_8cpp_ab4553be4db9860d940f81d7447173b2f}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!LED\_PIN@{LED\_PIN}}
+\index{LED\_PIN@{LED\_PIN}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{LED\_PIN}{LED\_PIN}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_ab4553be4db9860d940f81d7447173b2f} 
+\#define LED\+\_\+\+PIN~5}
+
+
+
+Pin del LED indicador. 
+
+
+
+\doxysubsection{Documentación de funciones}
+\Hypertarget{_free_r_t_o_s_8cpp_a1fcc599f808a2703497dd7bab1fd952e}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!buttonISR@{buttonISR}}
+\index{buttonISR@{buttonISR}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{buttonISR()}{buttonISR()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a1fcc599f808a2703497dd7bab1fd952e} 
+void IRAM\+\_\+\+ATTR button\+ISR (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+ISR para manejo de pulsadores. 
+
+Esta ISR\+:
+\begin{DoxyEnumerate}
+\item Se ejecuta cuando hay flanco de bajada en los botones, usando configuración de resistencia pull-\/up
+\item Incrementa el contador global si se presiona cualquiera
+\end{DoxyEnumerate}
+
+Características\+:
+\begin{DoxyItemize}
+\item No usa colas ni semáforos directamente 
+\end{DoxyItemize}\Hypertarget{_free_r_t_o_s_8cpp_ad7a1df263f6f823242a112ec11297434}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!dht@{dht}}
+\index{dht@{dht}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{dht()}{dht()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_ad7a1df263f6f823242a112ec11297434} 
+DHT dht (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_free_r_t_o_s_8cpp_a757bb4e2bff6148de6ef3989b32a0126}{DHTPIN}}}]{}{, }\item[{\mbox{\hyperlink{_free_r_t_o_s_8cpp_a2c509dba12bba99883a5be9341b7a0c5}{DHTTYPE}}}]{}{}\end{DoxyParamCaption})}
+
+
+
+Objeto sensor DHT. 
+
+\Hypertarget{_free_r_t_o_s_8cpp_af0410ab13c851f5a242ec55ae6e9cf24}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!enterDeepSleep@{enterDeepSleep}}
+\index{enterDeepSleep@{enterDeepSleep}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{enterDeepSleep()}{enterDeepSleep()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_af0410ab13c851f5a242ec55ae6e9cf24} 
+void enter\+Deep\+Sleep (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Configura y activa el modo Deep Sleep. 
+
+Esta función\+:
+\begin{DoxyEnumerate}
+\item Configura fuente de wakeup\+:
+\begin{DoxyItemize}
+\item timer\+: Después de 30 segundos
+\end{DoxyItemize}
+\item Inicia el modo Deep Sleep
+\end{DoxyEnumerate}
+
+Nota\+:
+\begin{DoxyItemize}
+\item Las variables marcadas con RTC\+\_\+\+DATA\+\_\+\+ATTR se preservan
+\item El consumo de energía se reduce 
+\end{DoxyItemize}\Hypertarget{_free_r_t_o_s_8cpp_afe461d27b9c48d5921c00d521181f12f}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!loop@{loop}}
+\index{loop@{loop}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_afe461d27b9c48d5921c00d521181f12f} 
+void loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Función loop principal (no utilizada en Free\+RTOS) 
+
+En sistemas con Free\+RTOS, el loop principal no se usa. Las tareas se manejan por el scheduler o planificador. \Hypertarget{_free_r_t_o_s_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!setup@{setup}}
+\index{setup@{setup}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a4fc01d736fe50cf5b977f755b675f11d} 
+void setup (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Función de configuración inicial. 
+
+Esta función\+:
+\begin{DoxyEnumerate}
+\item Inicializa periféricos (Serial, DHT, I2C, RTC)
+\item Configura pines (LED, botones)
+\item Configura interrupciones para los botones
+\item Crea colas y semáforos
+\item Crea todas las tareas de Free\+RTOS
+\item Inicia el contador de reinicios 
+\end{DoxyEnumerate}\Hypertarget{_free_r_t_o_s_8cpp_ab4b7f08d3cc28bbf0f98d3fed9dbd7d7}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!tareaAlarma@{tareaAlarma}}
+\index{tareaAlarma@{tareaAlarma}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{tareaAlarma()}{tareaAlarma()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_ab4b7f08d3cc28bbf0f98d3fed9dbd7d7} 
+void tarea\+Alarma (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters}{}\end{DoxyParamCaption})}
+
+
+
+Tarea para controlar el LED de alarma. 
+
+Esta tarea\+:
+\begin{DoxyEnumerate}
+\item Espera indefinidamente al semáforo led\+Semaphore
+\item Cuando lo recibe\+:
+\begin{DoxyItemize}
+\item Enciende el LED por 500ms
+\item Lo apaga
+\end{DoxyItemize}
+\end{DoxyEnumerate}
+
+Comunicación\+:
+\begin{DoxyItemize}
+\item Consumidor del semáforo led\+Semaphore(se usa un semanforo binario libre-\/ocupado)
+\item No produce datos para otras tareas
+\end{DoxyItemize}
+
+Sincronización\+:
+\begin{DoxyItemize}
+\item Se bloquea hasta que tarea\+Mostrar libera el semáforo
+\item Prioridad más alta para respuesta rápida 
+\end{DoxyItemize}\Hypertarget{_free_r_t_o_s_8cpp_a2c9b29c23ff0d2bc8d533ddd9a015b19}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!tareaCrearTrama@{tareaCrearTrama}}
+\index{tareaCrearTrama@{tareaCrearTrama}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{tareaCrearTrama()}{tareaCrearTrama()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a2c9b29c23ff0d2bc8d533ddd9a015b19} 
+void tarea\+Crear\+Trama (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters}{}\end{DoxyParamCaption})}
+
+
+
+Tarea para crear tramas formateadas. 
+
+Esta tarea\+:
+\begin{DoxyEnumerate}
+\item Mantiene últimos valores válidos de temperatura/humedad
+\item Recibe datos de sensores
+\item Recibe datos del RTC
+\item Cuando tiene todos los datos, crea una trama\+: "{}\+DD/\+MM/\+AAAA HH\+:\+MM\+:\+SS, Temp\+: X.\+XX C, Hum\+: XX.\+XX\%, Luz\+: XXXX"{}
+\item Envía la trama a trama\+Queue
+\end{DoxyEnumerate}
+
+Comunicación\+:
+\begin{DoxyItemize}
+\item Consumidor de sensor\+Queue y rtc\+Queue
+\item Productor de trama\+Queue 
+\end{DoxyItemize}\Hypertarget{_free_r_t_o_s_8cpp_a5c2532b4137b5e34da5934bd30848538}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!tareaDHT@{tareaDHT}}
+\index{tareaDHT@{tareaDHT}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{tareaDHT()}{tareaDHT()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a5c2532b4137b5e34da5934bd30848538} 
+void tarea\+DHT (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters}{}\end{DoxyParamCaption})}
+
+
+
+Tarea para lectura del sensor DHT11. 
+
+Esta tarea se ejecuta cada 2 segundos y\+:
+\begin{DoxyEnumerate}
+\item Lee temperatura y humedad del sensor DHT11
+\item Verifica que las lecturas sean válidas
+\item Crea una estructura \doxylink{struct_sensor_data}{Sensor\+Data} con los valores leídos
+\item Envía los datos a sensor\+Queue (cola de 10 elementos)
+\end{DoxyEnumerate}
+
+Comunicación\+:
+\begin{DoxyItemize}
+\item Productor de la cola sensor\+Queue (envía datos)
+\item No consume de ninguna cola 
+\end{DoxyItemize}\Hypertarget{_free_r_t_o_s_8cpp_aa12708dca00c5c1708c8219910c21e3f}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!tareaLDR@{tareaLDR}}
+\index{tareaLDR@{tareaLDR}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{tareaLDR()}{tareaLDR()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_aa12708dca00c5c1708c8219910c21e3f} 
+void tarea\+LDR (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters}{}\end{DoxyParamCaption})}
+
+
+
+Tarea para lectura del sensor LDR. 
+
+Esta tarea se ejecuta cada segundo y\+:
+\begin{DoxyEnumerate}
+\item Lee el valor analógico del LDR
+\item Crea una estructura \doxylink{struct_sensor_data}{Sensor\+Data} con el valor de luz
+\item Envía los datos a sensor\+Queue
+\end{DoxyEnumerate}
+
+Comunicación\+:
+\begin{DoxyItemize}
+\item Productor de la cola sensor\+Queue (envía datos)
+\item No consume de ninguna cola 
+\end{DoxyItemize}\Hypertarget{_free_r_t_o_s_8cpp_a9f29f1cc6da17cf19cdf38757904efbf}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!tareaMostrar@{tareaMostrar}}
+\index{tareaMostrar@{tareaMostrar}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{tareaMostrar()}{tareaMostrar()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a9f29f1cc6da17cf19cdf38757904efbf} 
+void tarea\+Mostrar (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters}{}\end{DoxyParamCaption})}
+
+
+
+Tarea para mostrar datos y gestionar alarmas. 
+
+Esta tarea\+:
+\begin{DoxyEnumerate}
+\item Recibe datos de sensor\+Queue
+\begin{DoxyItemize}
+\item Muestra temperatura/humedad o luz por serial
+\item Activa semáforo si supera umbrales (temp\texorpdfstring{$>$}{>}24 y hum\texorpdfstring{$>$}{>}70 o luz\texorpdfstring{$>$}{>}500)
+\end{DoxyItemize}
+\item Recibe datos de rtc\+Queue
+\begin{DoxyItemize}
+\item Muestra fecha y hora formateada por serial
+\end{DoxyItemize}
+\end{DoxyEnumerate}
+
+Comunicación\+:
+\begin{DoxyItemize}
+\item Consumidor de sensor\+Queue y rtc\+Queue (recibe datos)
+\item Productor del semáforo led\+Semaphore (para activar alarma)
+\end{DoxyItemize}
+
+Sincronización\+:
+\begin{DoxyItemize}
+\item Usa semáforo para indicar condición de alarma a tarea\+Alarma 
+\end{DoxyItemize}\Hypertarget{_free_r_t_o_s_8cpp_a93ba59a582c18d2cdcd403c913678294}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!tareaMostrarContador@{tareaMostrarContador}}
+\index{tareaMostrarContador@{tareaMostrarContador}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{tareaMostrarContador()}{tareaMostrarContador()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a93ba59a582c18d2cdcd403c913678294} 
+void tarea\+Mostrar\+Contador (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters}{}\end{DoxyParamCaption})}
+
+
+
+Tarea para mostrar el contador de pulsaciones. 
+
+Esta tarea\+:
+\begin{DoxyEnumerate}
+\item Muestra el valor del contador por serial cada segundo
+\item Usa variable contador marcada como RTC\+\_\+\+DATA\+\_\+\+ATTR
+\end{DoxyEnumerate}
+
+Comunicación\+:
+\begin{DoxyItemize}
+\item Accede a variable global compartida (contador)
+\item No usa colas ni semáforos 
+\end{DoxyItemize}\Hypertarget{_free_r_t_o_s_8cpp_af6be0a690aac43589dcf19fde3cff114}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!tareaMostrarTrama@{tareaMostrarTrama}}
+\index{tareaMostrarTrama@{tareaMostrarTrama}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{tareaMostrarTrama()}{tareaMostrarTrama()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_af6be0a690aac43589dcf19fde3cff114} 
+void tarea\+Mostrar\+Trama (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters}{}\end{DoxyParamCaption})}
+
+
+
+Tarea para mostrar tramas formateadas. 
+
+Esta tarea\+:
+\begin{DoxyEnumerate}
+\item Espera tramas de trama\+Queue
+\item Las muestra por el puerto serial
+\item Se ejecuta cada 5 segundos
+\end{DoxyEnumerate}
+
+Comunicación\+:
+\begin{DoxyItemize}
+\item Consumidor de trama\+Queue
+\item No produce datos para otras tareas 
+\end{DoxyItemize}\Hypertarget{_free_r_t_o_s_8cpp_aafb59fc00c6190f85aae3d6af399775d}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!tareaRTC@{tareaRTC}}
+\index{tareaRTC@{tareaRTC}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{tareaRTC()}{tareaRTC()}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_aafb59fc00c6190f85aae3d6af399775d} 
+void tarea\+RTC (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{pv\+Parameters}{}\end{DoxyParamCaption})}
+
+
+
+Tarea para lectura del RTC. 
+
+Esta tarea se ejecuta cada segundo y\+:
+\begin{DoxyEnumerate}
+\item Obtiene la fecha y hora actual del compilador
+\item Crea una estructura \doxylink{struct_r_t_c_data}{RTCData} con los valores
+\item Envía los datos a rtc\+Queue (cola de 5 elementos)
+\end{DoxyEnumerate}
+
+Comunicación\+:
+\begin{DoxyItemize}
+\item Productor de la cola rtc\+Queue (envía datos)
+\item No consume de ninguna cola 
+\end{DoxyItemize}
+
+\doxysubsection{Documentación de variables}
+\Hypertarget{_free_r_t_o_s_8cpp_a3bc40e5f900d73bdc3f480304ec6bb32}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!contador@{contador}}
+\index{contador@{contador}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{contador}{contador}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a3bc40e5f900d73bdc3f480304ec6bb32} 
+RTC\+\_\+\+DATA\+\_\+\+ATTR int contador = 0}
+
+
+
+Contador de pulsaciones persistente. 
+
+\Hypertarget{_free_r_t_o_s_8cpp_a075c5fc481fb07bde19169deab4ca162}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!ledSemaphore@{ledSemaphore}}
+\index{ledSemaphore@{ledSemaphore}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{ledSemaphore}{ledSemaphore}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a075c5fc481fb07bde19169deab4ca162} 
+Semaphore\+Handle\+\_\+t led\+Semaphore}
+
+
+
+Semáforo binario para controlar el LED de alarma. 
+
+\Hypertarget{_free_r_t_o_s_8cpp_afa042f998806fcdedab1794cebbeaad3}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!rtc@{rtc}}
+\index{rtc@{rtc}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{rtc}{rtc}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_afa042f998806fcdedab1794cebbeaad3} 
+RTC\+\_\+\+DS3231 rtc}
+
+
+
+Objeto RTC DS3231. 
+
+\Hypertarget{_free_r_t_o_s_8cpp_a32668467519cd6998f0d991817258ec6}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!rtcQueue@{rtcQueue}}
+\index{rtcQueue@{rtcQueue}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{rtcQueue}{rtcQueue}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a32668467519cd6998f0d991817258ec6} 
+Queue\+Handle\+\_\+t rtc\+Queue}
+
+
+
+Cola para datos del RTC (fecha y hora) 
+
+\Hypertarget{_free_r_t_o_s_8cpp_ac6b1fae2430dc808236d5f86df609c56}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!sensorQueue@{sensorQueue}}
+\index{sensorQueue@{sensorQueue}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{sensorQueue}{sensorQueue}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_ac6b1fae2430dc808236d5f86df609c56} 
+Queue\+Handle\+\_\+t sensor\+Queue}
+
+
+
+Cola para datos de sensores (temperatura, humedad, luz) 
+
+\Hypertarget{_free_r_t_o_s_8cpp_a9763f9a83417aa4f04e9cb04501c2dd2}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!tramaQueue@{tramaQueue}}
+\index{tramaQueue@{tramaQueue}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{tramaQueue}{tramaQueue}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a9763f9a83417aa4f04e9cb04501c2dd2} 
+Queue\+Handle\+\_\+t trama\+Queue}
+
+
+
+Cola para tramas formateadas completas. 
+
+\Hypertarget{_free_r_t_o_s_8cpp_a4f9748e80341ec343d855134bbf2f6bb}\index{FreeRTOS.cpp@{FreeRTOS.cpp}!wakeCounter@{wakeCounter}}
+\index{wakeCounter@{wakeCounter}!FreeRTOS.cpp@{FreeRTOS.cpp}}
+\doxysubsubsection{\texorpdfstring{wakeCounter}{wakeCounter}}
+{\footnotesize\ttfamily \label{_free_r_t_o_s_8cpp_a4f9748e80341ec343d855134bbf2f6bb} 
+RTC\+\_\+\+DATA\+\_\+\+ATTR int wake\+Counter = 0}
+
+
+
+Contador de reinicios persistente. 
+
